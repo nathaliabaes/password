@@ -1,17 +1,14 @@
-# pip install flask flask-cors
-
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from generate import gerar_password
 import os
 
 app = Flask(__name__)
-CORS(app)  # permite requisições de qualquer origem
+CORS(app)  m
 
 @app.route("/gerar", methods=["GET"])
 def gerar():
 
-    # --- Tamanho ---
     tamanho = request.args.get("tamanho")
     if tamanho is None:
         return jsonify({"erro": "O parâmetro 'tamanho' é obrigatório."}), 400
@@ -21,17 +18,14 @@ def gerar():
     except ValueError:
         return jsonify({"erro": "Tamanho inválido, envie um número."}), 400
 
-    # --- Opções de caracteres ---
     use_upper   = request.args.get("maiuscula") == "true"
     use_lower   = request.args.get("minuscula") == "true"
     use_number  = request.args.get("numero") == "true"
     use_special = request.args.get("especial") == "true"
 
-    # Nenhuma opção marcada → retorna erro
     if not (use_upper or use_lower or use_number or use_special):
         return jsonify({"erro": "Selecione pelo menos uma opção!"}), 400
 
-    # Gerar senha
     password = gerar_password(
         qnt=tamanho,
         use_upper=use_upper,

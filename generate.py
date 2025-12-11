@@ -18,6 +18,6 @@ def gerar_password(qnt, use_upper=True, use_lower=True, use_number=True, use_spe
         chars += string.punctuation
 
     if not chars:
-        return ""  # nenhuma opção selecionada → evita erro
+        return "" 
 
     return ''.join(random.choice(chars) for _ in range(qnt))
